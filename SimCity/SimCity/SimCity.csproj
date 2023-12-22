@@ -1,0 +1,92 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <StartupObject></StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="View\Resources\background.jpg" />
+    <None Remove="View\Resources\cable.png" />
+    <None Remove="View\Resources\catastrophe.png" />
+    <None Remove="View\Resources\commercial_0.png" />
+    <None Remove="View\Resources\commercial_1.png" />
+    <None Remove="View\Resources\commercial_2.png" />
+    <None Remove="View\Resources\commercial_empty.png" />
+    <None Remove="View\Resources\empty_field.png" />
+    <None Remove="View\Resources\forest.png" />
+    <None Remove="View\Resources\house_0.png" />
+    <None Remove="View\Resources\house_1.png" />
+    <None Remove="View\Resources\house_2.png" />
+    <None Remove="View\Resources\industrial_empty.png" />
+    <None Remove="View\Resources\industri_0.png" />
+    <None Remove="View\Resources\industri_1.png" />
+    <None Remove="View\Resources\industri_2.png" />
+    <None Remove="View\Resources\police.png" />
+    <None Remove="View\Resources\powerplant.png" />
+    <None Remove="View\Resources\powerplant_bl.png" />
+    <None Remove="View\Resources\powerplant_br.png" />
+    <None Remove="View\Resources\powerplant_tl.png" />
+    <None Remove="View\Resources\powerplant_tr.png" />
+    <None Remove="View\Resources\residential_empty.png" />
+    <None Remove="View\Resources\road.png" />
+    <None Remove="View\Resources\school.png" />
+    <None Remove="View\Resources\school_l.png" />
+    <None Remove="View\Resources\school_r.png" />
+    <None Remove="View\Resources\stadion_bl.png" />
+    <None Remove="View\Resources\stadion_br.png" />
+    <None Remove="View\Resources\stadion_tl.png" />
+    <None Remove="View\Resources\stadion_tr.png" />
+    <None Remove="View\Resources\university_bl.png" />
+    <None Remove="View\Resources\university_br.png" />
+    <None Remove="View\Resources\university_tl.png" />
+    <None Remove="View\Resources\university_tr.png" />
+    <None Remove="View\university.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimCity_Model\SimCity_Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Resources\background.jpg" />
+    <Resource Include="View\Resources\cable.png" />
+    <Resource Include="View\Resources\catastrophe.png" />
+    <Resource Include="View\Resources\commercial_2.png" />
+    <Resource Include="View\Resources\commercial_empty.png" />
+    <Resource Include="View\Resources\empty_field.png" />
+    <Resource Include="View\Resources\forest.png" />
+    <Resource Include="View\Resources\house_0.png" />
+    <Resource Include="View\Resources\house_1.png" />
+    <Resource Include="View\Resources\house_2.png" />
+    <Resource Include="View\Resources\industrial_empty.png" />
+    <Resource Include="View\Resources\industri_0.png" />
+    <Resource Include="View\Resources\industri_1.png" />
+    <Resource Include="View\Resources\industri_2.png" />
+    <Resource Include="View\Resources\police.png" />
+    <Resource Include="View\Resources\powerplant.png" />
+    <Resource Include="View\Resources\powerplant_bl.png" />
+    <Resource Include="View\Resources\powerplant_br.png" />
+    <Resource Include="View\Resources\powerplant_tl.png" />
+    <Resource Include="View\Resources\powerplant_tr.png" />
+    <Resource Include="View\Resources\residential_empty.png" />
+    <Resource Include="View\Resources\road.png" />
+    <Resource Include="View\Resources\commercial_0.png" />
+    <Resource Include="View\Resources\commercial_1.png" />
+    <Resource Include="View\Resources\school.png" />
+    <Resource Include="View\Resources\school_l.png" />
+    <Resource Include="View\Resources\school_r.png" />
+    <Resource Include="View\Resources\stadion_bl.png" />
+    <Resource Include="View\Resources\stadion_br.png" />
+    <Resource Include="View\Resources\stadion_tl.png" />
+    <Resource Include="View\Resources\stadion_tr.png" />
+    <Resource Include="View\Resources\university_bl.png" />
+    <Resource Include="View\Resources\university_br.png" />
+    <Resource Include="View\Resources\university_tl.png" />
+    <Resource Include="View\Resources\university_tr.png" />
+  </ItemGroup>
+
+</Project>

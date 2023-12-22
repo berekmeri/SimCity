@@ -1,0 +1,494 @@
+﻿<Window x:Class="SimCity.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimCity"
+        mc:Ignorable="d"
+        Title="Gentlemen - SimCity" WindowState="Maximized" ResizeMode="NoResize">
+
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding MoveMapLeftCommand}" Key="Left"/>
+        <KeyBinding Command="{Binding MoveMapLeftCommand}" Key="A"/>
+        
+        <KeyBinding Command="{Binding MoveMapRightCommand}" Key="Right"/>
+        <KeyBinding Command="{Binding MoveMapRightCommand}" Key="D"/>
+        
+        <KeyBinding Command="{Binding MoveMapUpCommand}" Key="Up"/>
+        <KeyBinding Command="{Binding MoveMapUpCommand}" Key="W"/>
+        
+        <KeyBinding Command="{Binding MoveMapDownCommand}" Key="Down"/>
+        <KeyBinding Command="{Binding MoveMapDownCommand}" Key="S"/>
+        
+        <KeyBinding Command="{Binding StartPauseCommand}" Key="Space"/>
+        
+        <KeyBinding Command="{Binding ZoomInCommand}" Key="OemPlus" />
+        <KeyBinding Command="{Binding ZoomInCommand}" Key="Add" />
+        
+        <KeyBinding Command="{Binding ZoomOutCommand}" Key="OemMinus" />
+        <KeyBinding Command="{Binding ZoomOutCommand}" Key="Subtract" />
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0" Grid.Column="0" Background="LightGray">
+            <MenuItem Header="Exit" FontSize="18" Command="{Binding ExitCommand}"/>
+            <MenuItem Header="Options" FontSize="18">
+                <RadioButton GroupName="Speed" IsChecked="{Binding IsGameSpeedSlow}">Slow</RadioButton>
+                <RadioButton GroupName="Speed" IsChecked="{Binding IsGameSpeedNormal}">Normal</RadioButton>
+                <RadioButton GroupName="Speed" IsChecked="{Binding IsGameSpeedFast}">Fast</RadioButton>
+            </MenuItem>
+        </Menu>
+        <Grid Grid.Row="1" Grid.Column="0" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Menu Grid.Row="0" Background="Gray">
+                <MenuItem Header="Zone" FontSize="24" Width="150">
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsResidentialZoneSelected}">Residential</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsCommercialZoneSelected}">Commercial</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsIndustrialZoneSelected}">Industrial</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsDeleteZoneSelected}">Delete</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsGetZoneDataSelected}">List zone properties</RadioButton>
+                </MenuItem>
+            </Menu>
+
+            <Menu Grid.Row="1" Background="Gray">
+                <MenuItem Header="Road/Cable" FontSize="24" Width="150">
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsRoadBuildSelected}">Build Road</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsRoadDeleteSelected}">Delete Road</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsCableBuildSelected}">Build Cable</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsCableDeleteSelected}">Delete Cable</RadioButton>
+                </MenuItem>
+            </Menu>
+
+            <Menu Grid.Row="2" Background="Gray">
+                <MenuItem Header="Service" FontSize="24" Width="150">
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsPoliceSelected}">Police</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsStadiumSelected}">Stadium</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsSchoolSelected}">School</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsUniversitySelected}">University</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsPowerPlantSelected}">PowerPlant</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsServiceDeleteSelected}">Delete</RadioButton>
+                </MenuItem>
+            </Menu>
+
+            <Menu Grid.Row="3"  Background="Gray">
+                <MenuItem Header="Forest" FontSize="24" Width="150">
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsForestBuildSelected}">Build</RadioButton>
+                    <RadioButton GroupName="Field" IsChecked="{Binding IsForestDeleteSelected}">Delete</RadioButton>
+                </MenuItem>
+            </Menu>
+
+            <Grid Grid.Row="4" Visibility="{Binding ZoneDataVisibility}" Background="Tan">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" FontSize="24" Text="{Binding ListedZoneCapacity}"/>
+                <TextBlock Grid.Row="1" FontSize="24" Text="{Binding ListedZoneCitizenCount}"/>
+                <TextBlock Grid.Row="2" FontSize="24" Text="{Binding ListedZoneSatisfaction}"/>
+                <TextBlock Grid.Row="3" FontSize="24" Text="{Binding ListedZoneCapacityLevel}"/>
+                <TextBlock Grid.Row="4" FontSize="24" Text="{Binding ListedZoneHasElectricity}"/>
+                <Button    Grid.Row="5" FontSize="24" FontWeight="Bold" Content="Increase level" Command="{Binding IncreaseSelectedZoneLevelCommand}" Background="DarkGray"/>
+            </Grid>
+        </Grid>
+
+        <Menu Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" FontSize="18">
+            <MenuItem Header="Budget">
+                <MenuItem Header="Expenses">
+                    <ListBox ItemsSource="{Binding Expenses}"/>
+                </MenuItem>
+                <MenuItem Header="Incomes">
+                    <ListBox ItemsSource="{Binding Incomes}"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
+
+
+        <StatusBar Height="Auto" Width="Auto" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+            <StatusBarItem FontSize="18">
+                <TextBlock Text="Date: " />
+            </StatusBarItem>
+            <StatusBarItem FontSize="18">
+                <TextBlock Text="{Binding GameTime}" />
+            </StatusBarItem>
+        </StatusBar>
+
+        <ItemsControl Grid.Row="1" Grid.Column="1"  ItemsSource="{Binding Fields}">
+            <!--az mezőket tároló vezérlő-->
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <!--a gombokat egy rácsba fűzzük fel-->
+                    <UniformGrid Rows="{Binding VisibleGridHeight}" Columns="{Binding VisibleGridWidth}" Margin="0"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <!--az elemek gombok lesznek-->
+                <DataTemplate>
+                    <Button Command="{Binding FieldClickedCommand}" CommandParameter="{Binding Index}" Focusable="False" Content="{Binding Text}" FontSize="12" FontWeight="Bold" BorderThickness="0">
+                        <Button.Style>
+                            <Style TargetType="{x:Type Button}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderThickness" Value="3"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="False">
+                                        <Setter Property="BorderThickness" Value="0"/>
+                                    </Trigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="EMPTY">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\empty_field.png" />
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding ZoneType}" Value="NOTHING">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\empty_field.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding ZoneType}" Value="RESIDENTIAL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\residential_empty.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding ZoneType}" Value="COMMERCIAL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\commercial_empty.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding ZoneType}" Value="INDUSTRIAL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\industrial_empty.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="ROAD">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\road.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="INDUSTRIAL_BUILDING_ZERO">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\industri_2.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="INDUSTRIAL_BUILDING_FIRST">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\industri_1.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                    
+                                    <DataTrigger Binding="{Binding FieldType}" Value="INDUSTRIAL_BUILDING_SECOND">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\industri_0.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="RESIDENTIAL_BUILDING_ZERO">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\house_0.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="RESIDENTIAL_BUILDING_FIRST">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\house_1.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="RESIDENTIAL_BUILDING_SECOND">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\house_2.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="COMMERCIAL_BUILDING_ZERO">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\commercial_0.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="COMMERCIAL_BUILDING_FIRST">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\commercial_1.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="COMMERCIAL_BUILDING_SECOND">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\commercial_2.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="POLICE">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\police.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="SCHOOL_R">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\school_r.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="SCHOOL_L">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\school_l.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="UNIVERSITY_TL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\university_tl.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="UNIVERSITY_TR">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\university_tr.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="UNIVERSITY_BL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\university_bl.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="UNIVERSITY_BR">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\university_br.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="POWERPLANT_TL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\powerplant_tr.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="POWERPLANT_TR">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\powerplant_tl.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="POWERPLANT_BL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\powerplant_bl.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="POWERPLANT_BR">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\powerplant_br.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="STADIUM_TL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\stadion_tl.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="STADIUM_TR">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\stadion_tr.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="STADIUM_BL">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\stadion_bl.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="STADIUM_BR">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\stadion_br.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="FOREST">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\forest.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding FieldType}" Value="CABLE">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\cable.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                    <DataTrigger Binding="{Binding IsCatastrophe}" Value="True">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <ImageBrush ImageSource="Resources\catastrophe.png"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <!--a függőségi tulajdonságokat kjülön kell kötnünk-->
+                <Style>
+                    <Setter Property="Grid.Row" Value="{Binding X}" />
+                    <Setter Property="Grid.Column" Value="{Binding Y}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+        </ItemsControl>
+        
+        
+
+        <StatusBar Background="White" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
+            <StatusBarItem >
+                <Button Height="Auto" Width="Auto" Background="Black" Foreground="White" FontSize="24" Content="{Binding IsGamePausedText}" Command="{Binding StartPauseCommand}"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <StatusBar Grid.Row="2" Grid.Column="1">
+            <StatusBarItem>
+                <TextBlock Text="Funds: " />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Funds}" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock Text="Population: " />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Population}" />
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem>
+                <TextBlock Text="Tax: " />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Tax}" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="%" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <StackPanel Orientation="Vertical">
+                    <Button Command="{Binding IncreaseTaxCommand}" Content="^" Focusable="False" />
+                    <Button Command="{Binding DecreaseTaxCommand}" Content="v" Focusable="False" />
+                </StackPanel>
+            </StatusBarItem>
+            <Separator />
+            <StatusBarItem />
+            <StatusBarItem>
+                <TextBlock Text="Satisfaction: " />
+            </StatusBarItem>
+            <StatusBarItem>
+                <TextBlock Text="{Binding Satisfaction}" />
+            </StatusBarItem>
+            <StatusBarItem FontSize="24" Foreground="Red" Visibility="{Binding CatastropheMessageVisibility}">
+                <TextBlock Text="{Binding CatastropheMessage}"/>
+            </StatusBarItem>
+        </StatusBar>
+    </Grid>
+</Window>
